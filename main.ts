@@ -1,3 +1,57 @@
+/**
+ * radio.setGroup(1);
+ * 
+ * setup before anything happens
+ */
+input.onButtonPressed(Button.A, function () {
+    if (test) {
+        if (index == resettingPoint) {
+            basic.showString("" + (words[0]))
+            currentSelected = "a"
+            index = 1
+        } else {
+            basic.showString("" + (words[index]))
+            currentSelected = words[index]
+            index += 1
+        }
+    } else {
+        basic.showString("" + (radioGroup.toString()))
+        num = radioGroup
+        radioGroup += 1
+    }
+})
+input.onButtonPressed(Button.AB, function () {
+    if (test) {
+        basic.showString("SENT")
+        radio.sendString(final)
+        final = ""
+        index = 1
+        currentSelected = "a"
+        basic.showString("a")
+    }
+})
+radio.onReceivedString(function (receivedString) {
+    basic.showString(receivedString)
+})
+input.onButtonPressed(Button.B, function () {
+    if (test) {
+        index = 1
+        final = "" + final + currentSelected
+        currentSelected = "a"
+        basic.showString("a")
+    } else {
+        test = true
+        basic.showString("CONNECTED TO CHANNEL")
+        radio.setGroup(num)
+    }
+})
+let final = ""
+let num = 0
+let index = 0
+let test = false
+let radioGroup = 0
+let resettingPoint = 0
+let currentSelected = ""
 const words: any = {
     0: "a",
     1: "b",
@@ -26,63 +80,7 @@ const words: any = {
     24: "y",
     25: "z"
 }
-
-let index = 0;
-let currentSelected = "a";
-let num = 0;
-let resettingPoint = 26;
-let final = "";
-let test = false;
-let radioGroup = 1;
-
-//radio.setGroup(1);
-
-// setup before anything happens
-
-basic.showString("CHOOSE RADIO CHANNEL");
-
-input.onButtonPressed(Button.A, function () {
-    if (test) {
-        if (index == resettingPoint) {
-            basic.showString(words[0]);
-            currentSelected = "a";
-            index = 1;
-        } else {
-            basic.showString(words[index]);
-            currentSelected = words[index];
-            index += 1;
-        }
-    }else{
-        basic.showString(radioGroup.toString());
-        num = radioGroup;
-        radioGroup += 1;
-    }
-});
-
-input.onButtonPressed(Button.B, function () {
-    if (test) {
-        index = 1;
-        final = final + currentSelected;
-        currentSelected = "a";
-        basic.showString("a");
-    }else{
-        test = true;
-        basic.showString("CONNECTED TO CHANNEL");
-        radio.setGroup(num);
-    }
-});
-
-input.onButtonPressed(Button.AB, function () {
-    if (test) {
-        basic.showString("SENT");
-        radio.sendString(final);
-        final = "";
-        index = 1;
-        currentSelected = "a";
-        basic.showString("a");
-    }
-});
-
-radio.onReceivedString(function (receivedString) {
-    basic.showString(receivedString);
-});
+currentSelected = "a"
+resettingPoint = 26
+radioGroup = 1
+basic.showString("CHOOSE RADIO CHANNEL")
